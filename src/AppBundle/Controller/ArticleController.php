@@ -2,9 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Article;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * @Route("/article")
@@ -16,6 +17,8 @@ class ArticleController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->render('article/list.html.twig');
+        $repository = $this->getDoctrine()->getRepository(Article::Class);
+        $article = $repository->findAll();
+        return $this->render('article/list.html.twig',['articles' => $article]);
     }
 }
